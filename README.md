@@ -42,3 +42,27 @@ This is a starter app, not yet deployed. Choose a Django-compatible host, set en
 
 ## Notes
 QR codes are generated from the actual configured destinations. The portfolio QR is shown as a placeholder until `PORTFOLIO_PUBLIC_URL` is set. The clinic link is shown as a placeholder until `CLINIC_WEBSITE_URL` is set.
+
+
+## Fix for the cyberpunk hero background (local Windows)
+
+The hero section in `templates/portfolio/home.html` uses `hero hero-background wrap`. The image is stored at `static/images/Cyberpunk Python Developer Portrait.png`, and `static/css/style.css` references it with a root-relative `/static/images/...` URL. The stylesheet link has a version query to avoid a stale browser cache.
+
+**Important:** If the browser still shows the old hero HTML, it is likely connected to a different Django server/project folder. Stop the old server with `Ctrl+C` in its terminal. Open Command Prompt in the extracted folder containing `manage.py`, then run:
+
+```cmd
+.venv\Scripts\activate
+python manage.py runserver
+```
+
+If this cleaned ZIP has no `.venv` yet, create it and install dependencies first:
+
+```cmd
+py -m venv .venv
+.venv\Scripts\activate
+python -m pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+Open exactly `http://127.0.0.1:8000/` and press `Ctrl+F5`. The ZIP intentionally excludes `.env`, `.venv`, `.git`, `staticfiles`, and the local database; create `.env` from `.env.example` if needed.
